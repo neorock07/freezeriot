@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freezeriot/Activity/Partials/CardIndikator.dart';
 import 'package:freezeriot/Activity/Partials/cardCircle.dart';
+import 'package:freezeriot/Controller/MqttController.dart';
 import 'package:freezeriot/Controller/SelectModelController.dart';
 import 'package:freezeriot/Model/ModeModel.dart';
 import 'package:get/get.dart';
+import 'package:mqtt_client/mqtt_server_client.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -14,6 +16,7 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  var mqttController = MqttController();
   var itemMode = <ModeModel>[
     ModeModel(id: 1, label: "Normal"),
     ModeModel(id: 2, label: "Hemat"),
@@ -25,6 +28,12 @@ class _MenuState extends State<Menu> {
    */
   var modeController = SelectModeController();
   var count = 20.obs;
+  @override
+  void initState() {
+    super.initState();
+    mqttController.connect();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,25 +96,25 @@ class _MenuState extends State<Menu> {
                           BAGIAN CARD INDIKATOR SUHU FREEZER 
                         */
 
-                        CardIndikator(context,
+                        Obx(() => (mqttController.payloadMsg.value.split(",").length == 4)? CardIndikator(context,
                             width: 150.w,
                             height: 50.h,
                             icon: Icons.thermostat,
                             iconColor: Colors.orange,
                             label: "Suhu Freezer",
-                            value: "27 *C"),
+                            value: "${mqttController.payloadMsg.value.split(",")[0]} *C"):CircularProgressIndicator()),
                         /*
                           WIDGET CardIndikator di path /Partials/CardIndikator.dart
                           BAGIAN CARD INDIKATOR SUHU LINGKUNGAN 
                         */
 
-                        CardIndikator(context,
+                        Obx(() =>(mqttController.payloadMsg.value.split(",").length == 4)? CardIndikator(context,
                             width: 150.w,
                             height: 50.h,
                             icon: Icons.waves,
-                            value: "37 *C",
+                            value: "${mqttController.payloadMsg.value.split(",")[1]} *C",
                             label: "Suhu Lingkungan",
-                            iconColor: Colors.deepOrange),
+                            iconColor: Colors.deepOrange):CircularProgressIndicator()),
                       ],
                     ),
                     Row(
@@ -117,25 +126,25 @@ class _MenuState extends State<Menu> {
                           BAGIAN CARD INDIKATOR SPEED KIPAS 
                         */
 
-                        CardIndikator(context,
+                        Obx(() => (mqttController.payloadMsg.value.split(",").length == 4)? CardIndikator(context,
                             width: 150.w,
                             height: 50.h,
-                            value: "230 RPM",
+                            value: "${mqttController.payloadMsg.value.split(",")[2]} RPM",
                             label: "Speed Kipas",
                             icon: Icons.wind_power,
-                            iconColor: Colors.blue),
+                            iconColor: Colors.blue):CircularProgressIndicator()),
 
                         /*
                           WIDGET CardIndikator di path /Partials/CardIndikator.dart
                           BAGIAN CARD INDIKATOR DAYA 
                         */
-                        CardIndikator(context,
+                        Obx(() =>(mqttController.payloadMsg.value.split(",").length == 4)? CardIndikator(context,
                             width: 150.w,
                             height: 50.h,
                             label: "Daya",
-                            value: "70 watt",
+                            value: "${mqttController.payloadMsg.value.split(",")[3]} watt",
                             icon: Icons.energy_savings_leaf,
-                            iconColor: Colors.green),
+                            iconColor: Colors.green):CircularProgressIndicator()),
                       ],
                     ),
                   ],
@@ -193,12 +202,10 @@ class _MenuState extends State<Menu> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CardCircle(context,
-                        color: Color.fromRGBO(81, 27, 124, 1), 
-                        icon: Icons.add,
-                        func: (){
-                          count.value +=1;
-                        }
-                        ),
+                        color: Color.fromRGBO(81, 27, 124, 1),
+                        icon: Icons.add, func: () {
+                      count.value += 1;
+                    }),
                     Text(
                       "${count.value} *C",
                       style: const TextStyle(
@@ -209,11 +216,9 @@ class _MenuState extends State<Menu> {
                     ),
                     CardCircle(context,
                         color: Color.fromRGBO(81, 27, 124, 1),
-                        icon: Icons.remove,
-                        func: (){
-                          count.value -=1;
-                        }
-                        ),
+                        icon: Icons.remove, func: () {
+                      count.value -= 1;
+                    }),
                   ],
                 ))
           ],
