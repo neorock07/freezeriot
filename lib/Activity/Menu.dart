@@ -20,6 +20,9 @@ class _MenuState extends State<Menu> {
           SizedBox(
             height: 80.h,
           ),
+          /*
+          BAGIAN UNTUK TAMPILIN NAMA USER
+          */ 
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
@@ -34,6 +37,10 @@ class _MenuState extends State<Menu> {
           SizedBox(
             height: 20.h,
           ),
+          /*
+            BAGIAN UNTUK BUAT CARD INDIKATOR
+          */
+
           Center(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.9,
@@ -56,6 +63,11 @@ class _MenuState extends State<Menu> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      /*
+                        WIDGET CardIndikator di path /Partials/CardIndikator.dart
+                        BAGIAN CARD INDIKATOR SUHU FREEZER 
+                      */
+
                       CardIndikator(context,
                           width: 150.w,
                           height: 50.h,
@@ -63,6 +75,11 @@ class _MenuState extends State<Menu> {
                           iconColor: Colors.orange,
                           label: "Suhu Freezer",
                           value: "27 *C"),
+                          /*
+                        WIDGET CardIndikator di path /Partials/CardIndikator.dart
+                        BAGIAN CARD INDIKATOR SUHU LINGKUNGAN 
+                      */
+
                       CardIndikator(context,
                           width: 150.w,
                           height: 50.h,
@@ -76,20 +93,30 @@ class _MenuState extends State<Menu> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      /*
+                        WIDGET CardIndikator di path /Partials/CardIndikator.dart
+                        BAGIAN CARD INDIKATOR SPEED KIPAS 
+                      */
+
                       CardIndikator(context,
                           width: 150.w,
                           height: 50.h,
                           value: "230 RPM",
                           label: "Speed Kipas",
-                          icon: Icons.energy_savings_leaf,
-                          iconColor: Colors.green),
+                          icon: Icons.wind_power,
+                          iconColor: Colors.blue),
+
+                      /*
+                        WIDGET CardIndikator di path /Partials/CardIndikator.dart
+                        BAGIAN CARD INDIKATOR DAYA 
+                      */    
                       CardIndikator(context,
                           width: 150.w,
                           height: 50.h,
                           label: "Daya",
                           value: "70 watt",
-                          icon: Icons.wind_power,
-                          iconColor: Colors.blue),
+                          icon: Icons.energy_savings_leaf,
+                          iconColor: Colors.green),
                     ],
                   ),
                 ],
