@@ -240,8 +240,8 @@ class _MenuState extends State<Menu> {
                         icon: Icons.add, func: () {
                       count += 1;
                       var f = mqttController.payloadMsg.value.split(',');
-                      mqttController.publish("ganyang/cukong/sialan/data",
-                          "${count},${f[1]},${f[2]},${f[3]}");
+                      mqttController.publish("ganyang/cukong/sialan/data/suhu",
+                          "${count}");
                     }),
                     Text(
                       "${mqttController.payloadMsg.value.split(',')[0]} *C",
@@ -256,8 +256,8 @@ class _MenuState extends State<Menu> {
                         icon: Icons.remove, func: () {
                       count -= 1;
                       var f = mqttController.payloadMsg.value.split(',');
-                      mqttController.publish("ganyang/cukong/sialan/data",
-                          "${count},${f[1]},${f[2]},${f[3]}");
+                      mqttController.publish("ganyang/cukong/sialan/data/suhu",
+                          "${count}");
                     }),
                   ],
                 ))
