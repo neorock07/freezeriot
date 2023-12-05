@@ -64,7 +64,7 @@ class MqttController extends GetxController {
   }
 
   void publish(String topic, String msg) {
-    if (client.connectionStatus == MqttConnectionState.connected) {
+    if (client.connectionStatus!.state == MqttConnectionState.connected) {
       final builder = MqttClientPayloadBuilder();
       builder.addString(msg);
       client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);

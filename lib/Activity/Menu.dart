@@ -215,12 +215,12 @@ class _MenuState extends State<Menu> {
                                 modeController.isSelect.value = e.id!;
                                 debugPrint("Selected: ${e.id}");
                                 if (e.id == 3) {
-                                  count += 1;
+                                  // count += 1;
                                   var f = mqttController.payloadMsg.value
                                       .split(',');
                                   mqttController.publish(
                                       "ganyang/cukong/sialan/data",
-                                      "${10},${f[1]},${f[2]},${f[3]}");
+                                      "${count},${f[1]},${f[2]},${f[3]}");
                                 }
                               },
                             ),
@@ -241,7 +241,7 @@ class _MenuState extends State<Menu> {
                       count += 1;
                       var f = mqttController.payloadMsg.value.split(',');
                       mqttController.publish("ganyang/cukong/sialan/data",
-                          "${20},${f[1]},${f[2]},${f[3]}");
+                          "${count},${f[1]},${f[2]},${f[3]}");
                     }),
                     Text(
                       "${mqttController.payloadMsg.value.split(',')[0]} *C",
@@ -252,12 +252,12 @@ class _MenuState extends State<Menu> {
                           fontWeight: FontWeight.bold),
                     ),
                     CardCircle(context,
-                        color: Color.fromRGBO(81, 27, 124, 1),
+                        color: const Color.fromRGBO(81, 27, 124, 1),
                         icon: Icons.remove, func: () {
                       count -= 1;
                       var f = mqttController.payloadMsg.value.split(',');
                       mqttController.publish("ganyang/cukong/sialan/data",
-                          "${20},${f[1]},${f[2]},${f[3]}");
+                          "${count},${f[1]},${f[2]},${f[3]}");
                     }),
                   ],
                 ))
