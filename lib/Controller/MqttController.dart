@@ -8,10 +8,6 @@ class MqttController extends GetxController {
   // String server = "test.mosquitto.org";
   var isLoad = false.obs;
   var payloadMsg = "".obs;
-  // var suhuF = "".obs;
-  // var suhuL = "".obs;
-  // var kipas = "".obs;
-  // var daya = "".obs;
 
   final MqttServerClient client = MqttServerClient("test.mosquitto.org", "");
 
@@ -35,7 +31,8 @@ class MqttController extends GetxController {
       log("iki ancuk i");
       await client.connect();
       subscribe("ganyang/cukong/sialan/data");
-      // publish( "ganyang/cukong/sialan", "cukong");
+
+      publish("ganyang/cukong/sialan/data", payloadMsg.value);
     } catch (e) {
       client.disconnect();
       throw Exception("can't connect");
@@ -43,7 +40,6 @@ class MqttController extends GetxController {
   }
 
   void subscribe(String topic) {
-    
     if (client.connectionStatus!.state == MqttConnectionState.connected) {
       isLoad.value = false;
       client.subscribe(topic, MqttQos.atLeastOnce);
@@ -66,11 +62,16 @@ class MqttController extends GetxController {
       // return "";
     }
   }
-  
-  void publish(String topic, String msg, MqttServerClient client) {
-    final builder = MqttClientPayloadBuilder();
-    builder.addString(msg);
-    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
-    Get.snackbar("publish data", "success publish data to $topic topic");
+
+  void publish(String topic, String msg) {
+    if (client.connectionStatus == MqttConnectionState.connected) {
+      final builder = MqttClientPayloadBuilder();
+      builder.addString(msg);
+      client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
+      Get.snackbar("publish data", "success publish data to $topic topic");
+    }else{
+      Get.snackbar("gagal publish data", "gagal publish data to $topic topic");
+
+    }
   }
 }

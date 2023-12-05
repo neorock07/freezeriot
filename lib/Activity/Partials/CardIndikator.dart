@@ -42,7 +42,7 @@ Widget CardIndikator(BuildContext context, {
                    style: TextStyle(
                     fontFamily: "Inria",
                     color: Colors.white,
-                    fontSize: 20.sp
+                    fontSize: 18.sp
                    ),),
                 ),
                 Align(
