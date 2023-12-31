@@ -100,7 +100,7 @@ class _MenuState extends State<Menu> {
 
                         Obx(() => (mqttController.payloadMsg.value
                                     .split(",")
-                                    .length ==
+                                    .length >=
                                 4)
                             ? CardIndikator(context,
                                 width: 150.w,
@@ -109,7 +109,7 @@ class _MenuState extends State<Menu> {
                                 iconColor: Colors.orange,
                                 label: "Suhu Freezer",
                                 value:
-                                    "${mqttController.payloadMsg.value.split(",")[0]} *C")
+                                   (mqttController.payloadMsg.value.split(",").length == 5)? "${mqttController.payloadMsg.value.split(",")[4]} *C": "${mqttController.payloadMsg.value.split(",")[0]} *C")
                             : const CircularProgressIndicator()),
                         /*
                           WIDGET CardIndikator di path /Partials/CardIndikator.dart
@@ -118,8 +118,7 @@ class _MenuState extends State<Menu> {
 
                         Obx(() => (mqttController.payloadMsg.value
                                     .split(",")
-                                    .length ==
-                                4)
+                                    .length >= 4)
                             ? CardIndikator(context,
                                 width: 150.w,
                                 height: 50.h,
@@ -142,7 +141,7 @@ class _MenuState extends State<Menu> {
 
                         Obx(() => (mqttController.payloadMsg.value
                                     .split(",")
-                                    .length ==
+                                    .length >=
                                 4)
                             ? CardIndikator(context,
                                 width: 150.w,
@@ -160,7 +159,7 @@ class _MenuState extends State<Menu> {
                         */
                         Obx(() => (mqttController.payloadMsg.value
                                     .split(",")
-                                    .length ==
+                                    .length >=
                                 4)
                             ? CardIndikator(context,
                                 width: 150.w,
@@ -241,10 +240,12 @@ class _MenuState extends State<Menu> {
                       count += 1;
                       var f = mqttController.payloadMsg.value.split(',');
                       mqttController.publish("ganyang/cukong/sialan/data/suhu",
+                          // "${count},${f[1]},${f[2]},${f[3]}, ${count}");
                           "${count}");
                     }),
                     Text(
-                      "${mqttController.payloadMsg.value.split(',')[0]} *C",
+                    //  "${mqttController.payloadMsg.value.split(',')[0]} *C",
+                     "${count} *C",
                       style: const TextStyle(
                           color: Colors.white,
                           fontFamily: "Inria",
@@ -257,6 +258,7 @@ class _MenuState extends State<Menu> {
                       count -= 1;
                       var f = mqttController.payloadMsg.value.split(',');
                       mqttController.publish("ganyang/cukong/sialan/data/suhu",
+                          // "${count},${f[1]},${f[2]},${f[3]}, ${count}");
                           "${count}");
                     }),
                   ],
