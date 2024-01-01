@@ -30,9 +30,9 @@ class MqttController extends GetxController {
     try {
       log("iki ancuk i");
       await client.connect();
-      subscribe("ganyang/cukong/sialan/data");
+      subscribe("freezeriot/data");
 
-      publish("ganyang/cukong/sialan/data", payloadMsg.value);
+      publish("freezeriot/data", payloadMsg.value);
     } catch (e) {
       client.disconnect();
       throw Exception("can't connect");

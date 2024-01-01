@@ -26,6 +26,7 @@ class _MenuState extends State<Menu> {
   /*
     PANGGIL CONTROLLER MODE 
    */
+
   var modeController = SelectModeController();
   var count = 5.obs;
   //  var count;
@@ -218,7 +219,7 @@ class _MenuState extends State<Menu> {
                                   var f = mqttController.payloadMsg.value
                                       .split(',');
                                   mqttController.publish(
-                                      "ganyang/cukong/sialan/data",
+                                      "freezeriot/data",
                                       "${count},${f[1]},${f[2]},${f[3]}");
                                 }
                               },
@@ -239,7 +240,7 @@ class _MenuState extends State<Menu> {
                         icon: Icons.add, func: () {
                       count += 1;
                       var f = mqttController.payloadMsg.value.split(',');
-                      mqttController.publish("ganyang/cukong/sialan/data/suhu",
+                      mqttController.publish("freezeriot/data",
                           // "${count},${f[1]},${f[2]},${f[3]}, ${count}");
                           "${count}");
                     }),
@@ -257,7 +258,7 @@ class _MenuState extends State<Menu> {
                         icon: Icons.remove, func: () {
                       count -= 1;
                       var f = mqttController.payloadMsg.value.split(',');
-                      mqttController.publish("ganyang/cukong/sialan/data/suhu",
+                      mqttController.publish("freezeriot/data",
                           // "${count},${f[1]},${f[2]},${f[3]}, ${count}");
                           "${count}");
                     }),
